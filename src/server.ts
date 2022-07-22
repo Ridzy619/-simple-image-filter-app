@@ -23,13 +23,19 @@ import { requireAuth } from './auth';
 
     let filtered_image_path: string
     try {
-    const filtered_image_path: string = await filterImageFromURL(image_url)
+    filtered_image_path = await filterImageFromURL(image_url)
     } catch(err) {
       res.status(400).send({message: "Unable to process image: " + err})
     }
+    console.log(filtered_image_path)
 
     await res.sendFile(filtered_image_path, (err) => {
-      res.status(400).send({message: "Error occured while returning the image."});
+      if ( err ){
+        console.log("Error occured while returning the image.")
+        res.status(400).end();
+      } else {
+        console.log("Sent file successfully.")
+      }
     });
   })
   
