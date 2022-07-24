@@ -7,7 +7,8 @@ import { config } from './config';
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
     if ( !req.headers || !req.headers.authorization ) {
-        return res.status(401).send({message: "No authorization headers"});
+        // return res.status(401).send({message: "No authorization headers"});
+        return next()
     }
 
     const bearer_token = req.headers.authorization.split(' ');
